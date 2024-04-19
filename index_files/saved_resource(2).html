@@ -1,0 +1,31 @@
+
+<!-- saved from url=(0014)about:internet -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body marginwidth="0" marginheight="0"><iframe id="newsWidgetFrame" src="./saved_resource(6).html" style="width: 100%;height: 500px; border: none;" title="Реклама"></iframe>
+
+<script type="text/javascript">
+	const themeName = document.cookie.split("; ").find((row) => row.startsWith("userTheme="))?.split("=")[1];
+	const widget = document.getElementById('newsWidgetFrame');
+	if (themeName) {
+		widget.setAttribute('src', `https://www.sravni.ru/ugc-widgets/news-widget/vertical/banner/${themeName}/`)
+	}
+</script>
+            
+        <script>
+            (function () {
+                const windowParent = window.parent;
+                const onChangeFocus = function() {
+                    const hasFocus = document.hasFocus();
+                    windowParent.postMessage({
+                        type: 'focus-updated',
+                        hasFocus: hasFocus,
+                        id: 'c5c7dd',
+                    }, '*');
+                    window.removeEventListener('focus', onChangeFocus);
+                };
+                window.addEventListener('focus', onChangeFocus);
+            })();
+        </script>
+    
+            <script>
+                if(window.onCodeLoad){window.onCodeLoad();}
+            </script></body></html>

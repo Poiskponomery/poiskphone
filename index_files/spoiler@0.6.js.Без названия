@@ -1,0 +1,80 @@
+"use strict";
+
+(function () {
+  (() => {
+    let oldPushState = history.pushState;
+    history.pushState = function pushState() {
+      let ret = oldPushState.apply(this, arguments);
+      window.SEPlugins["test-01"]["spoiler"]["spoiler@0.6"].init();
+      window.dispatchEvent(new Event("pushstate"));
+      window.dispatchEvent(new Event("locationchange"));
+      return ret;
+    };
+
+    let oldReplaceState = history.replaceState;
+    history.replaceState = function replaceState() {
+      let ret = oldReplaceState.apply(this, arguments);
+      window.SEPlugins["test-01"]["spoiler"]["spoiler@0.6"].init();
+      window.dispatchEvent(new Event("replacestate"));
+      window.dispatchEvent(new Event("locationchange"));
+      return ret;
+    };
+
+    window.addEventListener("popstate", () => {
+      window.SEPlugins["test-01"]["spoiler"]["spoiler@0.6"].init();
+      window.dispatchEvent(new Event("locationchange"));
+    });
+  })();
+  const plugin = {
+    vendor: "test-01",
+    name: "spoiler",
+    version: "spoiler@0.6",
+    fullName: "test-01/spoiler@0.6",
+    description: "Simple spoiler.",
+    author: "dima.ollyak@tiny.cloud",
+  };
+  window.SEPlugins = window.SEPlugins || {};
+  window.SEPlugins[plugin.vendor] = window.SEPlugins[plugin.vendor] || {};
+  window.SEPlugins[plugin.vendor][plugin.name] =
+    window.SEPlugins[plugin.vendor][plugin.name] || {};
+  window.SEPlugins[plugin.vendor][plugin.name][plugin.version] = {
+    init: function init() {
+      const SELECTOR = '[data-stk-plugin^="test-01--spoiler--spoiler"]';
+      const style = document.createElement("style");
+      style.innerHTML =
+        '\n        [data-stk-plugin^="test-01--spoiler--spoiler"] > .stk-grid-col > :nth-child(1):not(#stk) {\n          cursor: pointer;\n        }\n        \n        [data-stk-plugin^="test-01--spoiler--spoiler"]:not(.stk-plugin-spoiler--open) > .stk-grid-col > :nth-child(2):not(#stk) {\n          display: none;\n        }\n      ';
+      document.head.appendChild(style);
+
+      const addNode = function (spoiler) {
+        const header = spoiler.children[0].children[0];
+
+        if (header.getAttribute("data-is-spoiler-listener")) {
+          return;
+        }
+
+        header.addEventListener("click", function () {
+          spoiler.classList.toggle("stk-plugin-spoiler--open");
+          spoiler.querySelector(
+            "button[data-is-spoiler-listener]"
+          ).nextElementSibling.style.cursor = "unset";
+          spoiler.querySelector("button[data-is-spoiler-listener]").remove();
+        });
+        header.setAttribute("data-is-spoiler-listener", true);
+      };
+
+      const spoilers = document.querySelectorAll(SELECTOR);
+      spoilers.forEach(function (spoiler) {
+        addNode(spoiler);
+      });
+      return {
+        addNode: function addNodeHandler(node) {
+          if (node.matches(SELECTOR)) {
+            addNode(node);
+          }
+        },
+        reset: function reset() {},
+        destroy: function destroy() {},
+      };
+    },
+  };
+})();

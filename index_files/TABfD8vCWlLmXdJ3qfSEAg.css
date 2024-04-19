@@ -1,0 +1,14 @@
+:not(#stk):not(.stk) .stk-layout_4col_36403 {
+  --stk-limit: 630px;
+  --stk-m_r: 0px;
+  --stk-m_l: 0px;
+  --stk-gap: 20px;
+  --stk-cols: 4;
+}
+.stk-layout_6col_36403 {
+  --stk-limit: 630px;
+  --stk-m_r: 0px;
+  --stk-m_l: 0px;
+  --stk-gap: 20px;
+  --stk-cols: 6;
+}

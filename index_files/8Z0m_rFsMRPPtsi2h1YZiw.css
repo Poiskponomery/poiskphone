@@ -1,0 +1,1 @@
+:not(#stk):not(.stk) .stk-layout_6col_limited_940 { --stk-limit: 100%; --stk-m_r: 20px; --stk-m_l: 20px; --stk-gap: 20px; --stk-cols: 6; }
